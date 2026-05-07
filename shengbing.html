@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>中文课：我不舒服 | Болезни и самочувствие</title>
+<style>
+:root{--bg:#f7f2e8;--ink:#2f2a24;--card:#fffaf1;--accent:#2f7d67;--accent2:#e28f44;--soft:#dceee7;--bad:#ffe1df;--good:#dcf7df;--line:#eadcc8;--shadow:0 10px 26px rgba(62,45,25,.12)}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;background:radial-gradient(circle at top left,#e4f4ec,transparent 35%),var(--bg);color:var(--ink)}
+header{padding:28px 18px 18px;text-align:center;background:linear-gradient(135deg,#fff8e9,#e4f5ee);border-bottom:1px solid var(--line)}
+h1{margin:0;font-size:clamp(28px,6vw,54px);letter-spacing:.5px}.subtitle{font-size:18px;margin:10px auto 0;max-width:850px;line-height:1.5}.tag{display:inline-block;margin-top:14px;padding:7px 12px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:700;color:var(--accent)}
+main{max-width:1100px;margin:auto;padding:18px}.section{background:rgba(255,250,241,.92);border:1px solid var(--line);border-radius:26px;box-shadow:var(--shadow);padding:22px;margin:18px 0}.section h2{margin:0 0 14px;font-size:28px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px}.vocab{background:#fff;border:1px solid var(--line);border-radius:20px;padding:15px;min-height:130px;display:flex;flex-direction:column;gap:8px}.hanzi{font-size:34px;font-weight:800}.pinyin{color:var(--accent);font-weight:700}.ru{font-size:15px;color:#5e554c}.btn{border:0;border-radius:16px;padding:11px 14px;background:var(--accent);color:#fff;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #205849;transition:.15s}.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #205849}.btn.secondary{background:#fff;color:var(--accent);border:1px solid var(--accent);box-shadow:none}.btn.orange{background:var(--accent2);box-shadow:0 4px 0 #a8642d}.mini{font-size:13px;padding:7px 10px;border-radius:12px}.phrase{display:grid;grid-template-columns:1.2fr 1fr;gap:12px;border-bottom:1px dashed var(--line);padding:12px 0}.phrase:last-child{border-bottom:0}.cn{font-size:23px;font-weight:800}.explain{line-height:1.5}.note{background:var(--soft);border-left:6px solid var(--accent);border-radius:16px;padding:14px;line-height:1.55}.task{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;margin:14px 0}.question{font-size:23px;font-weight:800;margin:0 0 12px}.answers{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px}.answer{border:2px solid var(--line);background:#fffaf7;border-radius:18px;padding:13px;cursor:pointer;font-size:18px;font-weight:750;min-height:54px}.answer:hover{border-color:var(--accent)}.correct{background:var(--good)!important;border-color:#49aa58!important}.wrong{background:var(--bad)!important;border-color:#de6a61!important}.feedback{font-weight:800;margin-top:12px;min-height:24px}.pillrow{display:flex;gap:8px;flex-wrap:wrap}.pill{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:8px 11px;font-weight:700}.dialogue{background:#fdf7e9;border:1px solid var(--line);border-radius:20px;padding:16px;line-height:1.8;font-size:19px}.dragbank,.dropzone{display:flex;gap:10px;flex-wrap:wrap;min-height:58px;padding:12px;border:2px dashed var(--line);border-radius:18px;background:#fffaf6}.word{padding:10px 12px;background:#fff;border:1px solid var(--accent);border-radius:14px;font-weight:800;cursor:grab}.dropzone .word{background:#e8f6ee}.scorebox{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-radius:20px;padding:14px;margin:12px 0}.hidden{display:none}.story{font-size:18px;line-height:1.75}.chartrap{font-size:32px}.input{width:100%;padding:13px;border:2px solid var(--line);border-radius:16px;font-size:18px}.footer{text-align:center;color:#73675b;padding:26px 10px 40px}@media(max-width:650px){.phrase{grid-template-columns:1fr}.section{padding:16px}.answers{grid-template-columns:1fr}.hanzi{font-size:30px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>🤒 中文课：我不舒服</h1>
+  <p class="subtitle">Интерактивный урок по теме «болезни и самочувствие»: слова, фразы врача, аудирование, чтение, грамматика, иероглифы и говорение.</p>
+  <div class="tag">适合：10岁 · 学中文8个月 · 强基础</div>
+</header>
+<main>
+  <div class="scorebox">
+    <div><b>⭐ Баллы:</b> <span id="score">0</span> / <span id="total">0</span></div>
+    <button class="btn secondary" onclick="resetAll()">Начать заново</button>
+  </div>
+
+  <section class="section">
+    <h2>1. 新词语 · Новые слова</h2>
+    <div class="note">Нажимай 🔊, слушай китайское произношение и повторяй. В теме болезней особенно важно научиться говорить: <b>у меня болит...</b> и <b>мне нужно...</b></div>
+    <div class="grid" id="vocabGrid"></div>
+  </section>
+
+  <section class="section">
+    <h2>2. 关键句子 · Главные фразы</h2>
+    <div class="phrase"><div><div class="cn">你怎么了？</div><div class="pinyin">Nǐ zěnme le?</div></div><div class="explain">Что с тобой? / Что случилось?</div></div>
+    <div class="phrase"><div><div class="cn">我不舒服。</div><div class="pinyin">Wǒ bù shūfu.</div></div><div class="explain">Мне нехорошо.</div></div>
+    <div class="phrase"><div><div class="cn">我头疼 / 肚子疼 / 牙疼。</div><div class="pinyin">Wǒ tóu téng / dùzi téng / yá téng.</div></div><div class="explain">У меня болит голова / живот / зуб.</div></div>
+    <div class="phrase"><div><div class="cn">我发烧了。</div><div class="pinyin">Wǒ fāshāo le.</div></div><div class="explain">У меня температура. Частица <b>了</b> показывает изменение состояния.</div></div>
+    <div class="phrase"><div><div class="cn">你应该多喝水，好好休息。</div><div class="pinyin">Nǐ yīnggāi duō hē shuǐ, hǎohāo xiūxi.</div></div><div class="explain">Тебе следует пить больше воды и хорошо отдыхать.</div></div>
+  </section>
+
+  <section class="section">
+    <h2>3. 小医生任务 · Быстрые задания</h2>
+    <div id="quizArea"></div>
+  </section>
+
+  <section class="section">
+    <h2>4. 听力 · Аудирование</h2>
+    <div class="task">
+      <p class="question">Послушай сообщение и выбери, что случилось с мальчиком.</p>
+      <button class="btn orange" onclick="speak('妈妈，我今天不舒服。我发烧了，也咳嗽。我想去看医生。')">🔊 Прослушать</button>
+      <div class="answers" id="listeningAnswers"></div>
+      <div class="feedback" id="listenFb"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>5. 阅读 · Чтение</h2>
+    <div class="dialogue">
+      👩‍⚕️ 医生：你怎么了？<br>
+      👦 小明：我不舒服。我头疼，也有点儿发烧。<br>
+      👩‍⚕️ 医生：你咳嗽吗？<br>
+      👦 小明：不咳嗽，但是我喉咙疼。<br>
+      👩‍⚕️ 医生：你应该多喝水，吃药，好好休息。<br>
+      👦 小明：谢谢医生！
+    </div>
+    <div id="readingArea"></div>
+  </section>
+
+  <section class="section">
+    <h2>6. 语法小机关 · Собери предложение</h2>
+    <div class="note">Формула: <b>Кто + где/когда + состояние/симптом + совет</b>. Например: 我今天不舒服，应该多喝水。</div>
+    <div class="task">
+      <p class="question">Перетащи слова в правильном порядке:</p>
+      <div class="dragbank" id="dragBank"></div>
+      <div class="dropzone" id="dropZone"></div>
+      <button class="btn" onclick="checkDrag()">Проверить</button>
+      <button class="btn secondary" onclick="setupDrag()">Сбросить</button>
+      <div class="feedback" id="dragFb"></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>7. 汉字陷阱 · Иероглифические ловушки</h2>
+    <div id="charArea"></div>
+  </section>
+
+  <section class="section">
+    <h2>8. 口语 · Говорение</h2>
+    <div class="task">
+      <p class="question">Представь: ты пришёл/пришла к врачу. Скажи по-китайски 4 фразы:</p>
+      <div class="pillrow">
+        <span class="pill">1️⃣ 你怎么了？</span>
+        <span class="pill">2️⃣ 我不舒服。</span>
+        <span class="pill">3️⃣ 我……疼 / 我发烧了。</span>
+        <span class="pill">4️⃣ 我应该……</span>
+      </div>
+      <p>Мини-ответ можно записать сюда:</p>
+      <textarea class="input" rows="4" placeholder="我不舒服。我……"></textarea>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>9. 最后任务 · Финальный мини-квест</h2>
+    <p class="story">Ты — 小医生. К тебе пришли 3 пациента. Подбери каждому совет:</p>
+    <div id="doctorArea"></div>
+  </section>
+</main>
+<div class="footer">by Galina Netsvetaeva · 中文互动课</div>
+<script>
+const vocab=[
+ {c:'生病',p:'shēngbìng',r:'болеть / заболеть',e:'🤒'}, {c:'不舒服',p:'bù shūfu',r:'плохо себя чувствовать',e:'😵‍💫'},
+ {c:'感冒',p:'gǎnmào',r:'простуда',e:'🤧'}, {c:'发烧',p:'fāshāo',r:'температура / жар',e:'🌡️'},
+ {c:'咳嗽',p:'késou',r:'кашлять / кашель',e:'😷'}, {c:'头疼',p:'tóu téng',r:'болит голова',e:'🤕'},
+ {c:'肚子疼',p:'dùzi téng',r:'болит живот',e:'🤢'}, {c:'喉咙疼',p:'hóulóng téng',r:'болит горло',e:'🗣️'},
+ {c:'牙疼',p:'yá téng',r:'болит зуб',e:'🦷'}, {c:'流鼻涕',p:'liú bítì',r:'насморк',e:'👃'},
+ {c:'看医生',p:'kàn yīshēng',r:'идти к врачу',e:'👩‍⚕️'}, {c:'吃药',p:'chī yào',r:'пить/принимать лекарство',e:'💊'},
+ {c:'喝水',p:'hē shuǐ',r:'пить воду',e:'💧'}, {c:'休息',p:'xiūxi',r:'отдыхать',e:'🛌'},
+ {c:'应该',p:'yīnggāi',r:'следует / нужно',e:'✅'}, {c:'身体',p:'shēntǐ',r:'тело / здоровье',e:'🧍'}
+];
+let score=0,total=0,done=new Set();
+const $=id=>document.getElementById(id);
+function speak(text){ if(!('speechSynthesis' in window)){alert('Озвучка не поддерживается этим браузером');return;} speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='zh-CN'; u.rate=.78; speechSynthesis.speak(u); }
+function shuffle(a){return [...a].sort(()=>Math.random()-.5)}
+function addPoint(id){ if(!done.has(id)){done.add(id);score++;$('score').textContent=score;} }
+function setTotal(n){total=n;$('total').textContent=n;}
+function cardAns(parent,items,correct,fb,id){ parent.innerHTML=''; shuffle(items).forEach(x=>{let b=document.createElement('button');b.className='answer';b.innerHTML=x;b.onclick=()=>{[...parent.children].forEach(c=>c.disabled=true); if(x===correct){b.classList.add('correct');fb.textContent='✅ 太好了！Правильно!';addPoint(id)} else {b.classList.add('wrong');fb.textContent='❌ Почти! Правильный ответ: '+correct; [...parent.children].forEach(c=>{if(c.innerHTML===correct)c.classList.add('correct')})}};parent.appendChild(b);}); }
+function renderVocab(){ $('vocabGrid').innerHTML=vocab.map(v=>`<div class="vocab"><div class="hanzi">${v.e} ${v.c}</div><div class="pinyin">${v.p}</div><div class="ru">${v.r}</div><button class="btn mini secondary" onclick="speak('${v.c}')">🔊 听</button></div>`).join(''); }
+const quiz=[
+ {q:'Как сказать «У меня болит голова»?', a:'我头疼。', opts:['我头疼。','我喝水。','我看医生。','我休息。']},
+ {q:'Что значит 你怎么了？', a:'Что с тобой?', opts:['Что с тобой?','Сколько тебе лет?','Куда ты идёшь?','Что ты любишь есть?']},
+ {q:'Выбери правильную фразу: «Мне нехорошо»', a:'我不舒服。', opts:['我不舒服。','我很高兴。','我喜欢医生。','我没有水。']},
+ {q:'Какой совет подходит при температуре?', a:'多喝水，好好休息。', opts:['多喝水，好好休息。','多吃冰淇淋。','去游泳。','买新衣服。']},
+ {q:'Что значит 发烧？', a:'температура / жар', opts:['температура / жар','зубная боль','одежда','насморк']}
+];
+function renderQuiz(){ const qa=$('quizArea'); qa.innerHTML=''; quiz.forEach((t,i)=>{let div=document.createElement('div');div.className='task';div.innerHTML=`<p class="question">${i+1}. ${t.q}</p><div class="answers" id="q${i}"></div><div class="feedback" id="fb${i}"></div>`;qa.appendChild(div); cardAns($('q'+i),t.opts,t.a,$('fb'+i),'quiz'+i);}); }
+function renderListening(){ cardAns($('listeningAnswers'),['🤒 发烧 + 咳嗽','🦷 牙疼','🤢 肚子疼','😄 很高兴'],'🤒 发烧 + 咳嗽',$('listenFb'),'listen'); }
+const reading=[
+ {q:'小明怎么了？',a:'他头疼，也有点儿发烧。',opts:['他头疼，也有点儿发烧。','他牙疼。','他想买衣服。','他很开心。']},
+ {q:'小明咳嗽吗？',a:'不咳嗽。',opts:['不咳嗽。','咳嗽。','他不知道。','医生咳嗽。']},
+ {q:'医生说小明应该做什么？',a:'多喝水，吃药，好好休息。',opts:['多喝水，吃药，好好休息。','去上学。','吃很多冰淇淋。','买公共汽车。']}
+];
+function renderReading(){ const area=$('readingArea'); reading.forEach((t,i)=>{let d=document.createElement('div');d.className='task';d.innerHTML=`<p class="question">${t.q}</p><div class="answers" id="r${i}"></div><div class="feedback" id="rfb${i}"></div>`;area.appendChild(d);cardAns($('r'+i),t.opts,t.a,$('rfb'+i),'read'+i);}); }
+let dragWords=['我','今天','不舒服','应该','去','看医生'];
+function setupDrag(){ const bank=$('dragBank'), drop=$('dropZone'); bank.innerHTML=''; drop.innerHTML=''; shuffle(dragWords).forEach(w=>{let s=document.createElement('span');s.className='word';s.textContent=w;s.draggable=true;s.ondragstart=e=>e.dataTransfer.setData('text/plain',w);s.onclick=()=>drop.appendChild(s);bank.appendChild(s);}); $('dragFb').textContent=''; }
+['dragBank','dropZone'].forEach(id=>setTimeout(()=>{let el=$(id); if(el){el.ondragover=e=>e.preventDefault(); el.ondrop=e=>{e.preventDefault(); let w=e.dataTransfer.getData('text/plain'); let item=[...document.querySelectorAll('.word')].find(x=>x.textContent===w && x.parentElement.id!==id); if(item)el.appendChild(item);};}},100));
+function checkDrag(){ const ans=[...$('dropZone').children].map(x=>x.textContent).join(''); if(ans==='我今天不舒服应该去看医生'){$('dragFb').textContent='✅ 对！我今天不舒服，应该去看医生。';addPoint('drag')}else $('dragFb').textContent='❌ Попробуй порядок: 我 今天 不舒服，应该 去 看医生。'; }
+const chars=[
+ {q:'Выбери иероглиф «болезнь / болеть» 生病',a:'病',opts:['病','疼','痛','床']},
+ {q:'Выбери 疼 в слове 头疼',a:'疼',opts:['疼','痛','病','痒']},
+ {q:'Выбери 药 в слове 吃药',a:'药',opts:['药','约','要','咬']}
+];
+function renderChars(){ const area=$('charArea'); chars.forEach((t,i)=>{let d=document.createElement('div');d.className='task';d.innerHTML=`<p class="question">${t.q}</p><div class="answers chartrap" id="c${i}"></div><div class="feedback" id="cfb${i}"></div>`;area.appendChild(d);cardAns($('c'+i),t.opts,t.a,$('cfb'+i),'char'+i);}); }
+const patients=[
+ {name:'👧 安娜：我牙疼。',a:'应该去看牙医。',opts:['应该去看牙医。','应该买裙子。','应该去游泳。']},
+ {name:'👦 马克：我发烧了。',a:'应该休息，多喝水。',opts:['应该休息，多喝水。','应该吃冰淇淋。','应该跑步。']},
+ {name:'🧒 小雨：我流鼻涕，也咳嗽。',a:'可能感冒了，应该看医生。',opts:['可能感冒了，应该看医生。','应该买鞋。','应该喝可乐。']}
+];
+function renderDoctor(){ const area=$('doctorArea'); patients.forEach((t,i)=>{let d=document.createElement('div');d.className='task';d.innerHTML=`<p class="question">${t.name}</p><div class="answers" id="d${i}"></div><div class="feedback" id="dfb${i}"></div>`;area.appendChild(d);cardAns($('d'+i),t.opts,t.a,$('dfb'+i),'doc'+i);}); }
+function resetAll(){score=0;done.clear();$('score').textContent=0;document.querySelectorAll('.feedback').forEach(x=>x.textContent='');renderQuiz();renderListening();$('readingArea').innerHTML='';renderReading();setupDrag();$('charArea').innerHTML='';renderChars();$('doctorArea').innerHTML='';renderDoctor();}
+renderVocab();renderQuiz();renderListening();renderReading();setupDrag();renderChars();renderDoctor();setTotal(5+1+3+1+3+3);
+</script>
+</body>
+</html>
