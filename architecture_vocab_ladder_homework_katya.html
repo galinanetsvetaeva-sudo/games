@@ -1,0 +1,95 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>建筑词汇 · Vocabulary Ladder</title>
+<style>
+:root{--j:#28584b;--r:#a64b40;--g:#c19a57;--bg:#f4eee1;--p:#fffdf8;--ink:#1f2722;--mut:#73766f}
+*{box-sizing:border-box}body{margin:0;background:linear-gradient(135deg,#e8dfcf,#faf7ef);font-family:system-ui,"Segoe UI",sans-serif;color:var(--ink)}
+header{position:sticky;top:0;z-index:9;background:#faf7efee;backdrop-filter:blur(10px);padding:10px 4%;display:flex;align-items:center;gap:12px;border-bottom:1px solid #ddd0bb}
+.logo{font-weight:900;color:var(--j)}.bar{height:9px;background:#ded3c0;border-radius:20px;overflow:hidden;flex:1}#bar{height:100%;background:linear-gradient(90deg,var(--j),var(--g));width:12.5%;transition:.3s}
+main{max-width:980px;margin:auto;padding:18px}.hero{background:linear-gradient(120deg,#20483d,#48796a);color:#fff;border-radius:27px;padding:30px;margin-bottom:14px}h1{font:700 clamp(38px,7vw,68px) Georgia,serif;margin:0}h2{font:700 31px Georgia,serif;margin:0 0 5px}
+nav{display:flex;gap:7px;overflow:auto;margin:12px 0}nav button,.btn{border:0;border-radius:12px;padding:11px 13px;font-weight:800;white-space:nowrap;cursor:pointer}nav button{background:#e3dacb}nav button.on,.btn{background:var(--j);color:#fff}
+section{display:none;background:var(--p);border:1px solid #ded1bb;border-radius:23px;padding:23px;box-shadow:0 12px 32px #463c2c18}section.on{display:block}
+.sub{color:var(--mut);margin-bottom:15px}.card{background:var(--bg);border-radius:18px;padding:18px;margin:12px 0}.prompt{font-size:17px;text-align:center;color:var(--mut)}.word{font:800 clamp(40px,8vw,70px) Georgia,"Noto Serif SC",serif;text-align:center;color:var(--j);padding:15px}.ru{font-size:31px;font-weight:900;text-align:center;padding:18px;color:var(--j)}.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:9px}.opts button{border:1px solid #d4c6ad;background:#fff;border-radius:13px;padding:14px;font-size:18px;cursor:pointer}.opts.cn button{font:700 25px Georgia,"Noto Serif SC",serif}.opts button.good{background:#dceee3;border-color:#679379}.opts button.bad{background:#f4d9d7;border-color:#bd6b65}
+.listen{width:68px;height:68px;border:0;border-radius:50%;background:var(--j);color:white;font-size:29px;cursor:pointer;box-shadow:0 5px 14px #214f4335}.center{text-align:center}.actions{display:flex;gap:9px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:14px}.count{font-weight:900;color:var(--j)}
+.assemble{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:15px 0;min-height:55px}.piece{padding:10px 13px;background:white;border:1px solid #d4c6ad;border-radius:12px;font:700 24px Georgia,"Noto Serif SC",serif;cursor:pointer}.piece.used{opacity:.3}.built{min-height:58px;border:2px dashed #c7b795;border-radius:13px;padding:10px;text-align:center;font:800 31px Georgia,"Noto Serif SC",serif}
+.triple{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.triple>div{background:#fff;border:1px solid #d4c6ad;border-radius:15px;padding:13px;text-align:center}.triple .lab{font-size:12px;color:var(--mut)}.triple .val{font-size:22px;font-weight:900;margin-top:6px}.hidden{filter:blur(8px);user-select:none}footer{text-align:center;padding:25px;color:#777}
+@media(max-width:600px){main{padding:9px}section{padding:15px}.triple{grid-template-columns:1fr}}
+</style></head><body><header><span class="logo">建筑 LADDER</span><div class="bar"><div id="bar"></div></div><span>★ <b id="score">0</b></span></header>
+<main><div class="hero"><h1>建筑词汇</h1><p>От значения к звучанию и самостоятельному воспроизведению. 21 слово · 8 ступеней.</p></div><nav id="nav"></nav>
+
+<section data-t="1 · 汉字→意思" class="on"><h2>第一关 · 看汉字，找意思</h2><div class="sub">Сначала узнаём слово глазами.</div><div class="card"><div class="word" id="aWord"></div><div class="opts" id="aOpts"></div><div class="actions"><span class="count" id="aCount"></span><button class="btn" onclick="nextA()">Следующее →</button></div></div></section>
+
+<section data-t="2 · 意思→汉字"><h2>第二关 · 看意思，找汉字</h2><div class="sub">Теперь наоборот: русского перевода достаточно, иероглиф заранее не показывается.</div><div class="card"><div class="ru" id="bRu"></div><div class="opts cn" id="bOpts"></div><div class="actions"><span class="count" id="bCount"></span><button class="btn" onclick="nextB()">Следующее →</button></div></div></section>
+
+<section data-t="3 · 听→汉字"><h2>第三关 · 听一听，找汉字</h2><div class="sub">Никакой текстовой подсказки: только звук → правильные иероглифы.</div><div class="card center"><button class="listen" onclick="playC()">🔊</button><div class="opts cn" id="cOpts" style="margin-top:17px"></div><div class="actions"><span class="count" id="cCount"></span><button class="btn" onclick="nextC()">Следующее →</button></div></div></section>
+
+<section data-t="4 · 汉字双胞胎"><h2>第四关 · 找汉字双胞胎</h2><div class="sub">Показан только перевод. Найди нужное слово среди очень похожих иероглифических «двойников».</div><div class="card"><div class="ru" id="dRu"></div><div class="opts cn" id="dOpts"></div><div class="actions"><span class="count" id="dCount"></span><button class="btn" onclick="nextD()">Следующее →</button></div></div></section>
+
+<section data-t="5 · 声音双胞胎"><h2>第五关 · 找声音双胞胎</h2><div class="sub">Послушай слово и выбери правильный pinyin среди фонетически близких вариантов.</div><div class="card center"><button class="listen" onclick="playE()">🔊</button><div class="opts" id="eOpts" style="margin-top:17px"></div><div class="actions"><span class="count" id="eCount"></span><button class="btn" onclick="nextE()">Следующее →</button></div></div></section>
+
+<section data-t="6 · 拼汉字"><h2>第六关 · 把词拼起来</h2><div class="sub">Видишь только перевод. Собери нужное китайское слово из частей и похожих «ловушек».</div><div class="card"><div class="ru" id="fRu"></div><div class="built" id="built"></div><div class="assemble" id="pieces"></div><div class="actions"><button class="btn" onclick="checkBuild()">Проверить ✓</button><button class="btn" onclick="resetBuild()">Сбросить ↻</button><button class="btn" onclick="nextF()">Следующее →</button><span class="count" id="fCount"></span></div></div></section>
+
+<section data-t="7 · 三合一"><h2>第七关 · 三合一</h2><div class="sub">Собери полную карточку слова: значение + иероглифы + произношение.</div><div class="card"><div class="ru" id="gRu"></div><div class="opts cn" id="gChars"></div><hr style="border:0;border-top:1px solid #d8cbb5;margin:17px 0"><div class="opts" id="gPy"></div><div class="actions"><button class="listen" onclick="playG()">🔊</button><span class="count" id="gCount"></span><button class="btn" onclick="nextG()">Следующее →</button></div></div></section>
+
+<section data-t="8 · 最后测试"><h2>最后测试 · Без опор</h2><div class="sub">Финальная ступень: сначала ответь сама, потом открой карточку и проверь себя.</div><div class="card"><div class="ru" id="hRu"></div><div class="actions"><button class="listen" onclick="playH()">🔊</button><button class="btn" onclick="revealH()">Показать ответ</button><button class="btn" onclick="nextH()">Следующее →</button></div><div class="triple hidden" id="hAnswer"><div><div class="lab">汉字</div><div class="val" id="hCh"></div></div><div><div class="lab">拼音</div><div class="val" id="hPy"></div></div><div><div class="lab">意思</div><div class="val" id="hMean"></div></div></div></div></section>
+</main><footer>by Galina Netsvetaeva</footer>
+<script>
+const V=[["房子", "fángzi", "дом", ["放子", "方子", "房了"]], ["公寓", "gōngyù", "квартира", ["工寓", "公遇", "公愚"]], ["摩天大楼", "mótiān dàlóu", "небоскрёб", ["磨天大楼", "摩夭大楼", "摩天太楼"]], ["别墅", "biéshù", "вилла", ["别野", "列墅", "别舒"]], ["凉亭", "liángtíng", "беседка / павильон", ["凉停", "京亭", "凉庭"]], ["塔", "tǎ", "башня", ["搭", "答", "它"]], ["拱门", "gǒngmén", "арка", ["供门", "拱问", "洪门"]], ["圆形大厅", "yuánxíng dàtīng", "круглый зал", ["园形大厅", "圆行大厅", "圆形大听"]], ["宫殿", "gōngdiàn", "дворец", ["官殿", "宫电", "宫店"]], ["柱子", "zhùzi", "колонна", ["住子", "注子", "柱了"]], ["穹顶", "qióngdǐng", "купол", ["穷顶", "穹项", "弓顶"]], ["梁", "liáng", "балка", ["粱", "凉", "两"]], ["楼梯", "lóutī", "лестница", ["楼弟", "搂梯", "楼低"]], ["阳台", "yángtái", "балкон", ["洋台", "阳抬", "阴台"]], ["地下室", "dìxiàshì", "подвал", ["地下市", "地上室", "底下室"]], ["墙", "qiáng", "стена", ["强", "培", "增"]], ["外墙", "wàiqiáng", "наружная стена", ["外强", "处墙", "外培"]], ["内墙", "nèiqiáng", "внутренняя стена", ["内强", "肉墙", "内培"]], ["承重墙", "chéngzhòngqiáng", "несущая стена", ["成重墙", "承种墙", "承重强"]], ["隔墙", "géqiáng", "перегородка", ["格墙", "隔强", "融墙"]], ["玻璃幕墙", "bōli mùqiáng", "стеклянный фасад", ["波璃幕墙", "玻璃暮墙", "玻璃幕强"]]];const shuffle=a=>[...a].sort(()=>Math.random()-.5);let score=0;
+const secs=[...document.querySelectorAll('section')],nav=document.getElementById('nav');
+secs.forEach((s,i)=>{let b=document.createElement('button');b.textContent=s.dataset.t;b.onclick=()=>show(i);if(!i)b.classList.add('on');nav.appendChild(b)});
+function show(i){secs.forEach((s,j)=>s.classList.toggle('on',i===j));[...nav.children].forEach((b,j)=>b.classList.toggle('on',i===j));bar.style.width=((i+1)/secs.length*100)+'%';scrollTo({top:105,behavior:'smooth'})}function add(){score++;document.getElementById('score').textContent=score}
+function setOpts(el,arr,ans){el.innerHTML='';shuffle(arr).forEach(x=>{let b=document.createElement('button');b.textContent=x;b.onclick=()=>{if([...el.children].some(z=>z.classList.contains('good')))return;[...el.children].forEach(z=>{if(z.textContent===ans)z.classList.add('good')});if(x===ans)add();else b.classList.add('bad')};el.appendChild(b)})}
+function distract(i,k,field){return shuffle(V.filter((_,j)=>j!==i).map(x=>x[field])).slice(0,k)}
+function speak(t){speechSynthesis.cancel();let u=new SpeechSynthesisUtterance(t);u.lang='zh-CN';u.rate=.68;let vs=speechSynthesis.getVoices();let z=vs.find(v=>/zh-CN/i.test(v.lang));if(z)u.voice=z;speechSynthesis.speak(u)}
+let A=0;function renderA(){let v=V[A];aWord.textContent=v[0];setOpts(aOpts,[v[2],...distract(A,3,2)],v[2]);aCount.textContent=(A+1)+'/21'}function nextA(){A=(A+1)%V.length;renderA()}
+let B=0;function renderB(){let v=V[B];bRu.textContent=v[2];setOpts(bOpts,[v[0],...distract(B,3,0)],v[0]);bCount.textContent=(B+1)+'/21'}function nextB(){B=(B+1)%V.length;renderB()}
+let C=0;function renderC(){let v=V[C];setOpts(cOpts,[v[0],...distract(C,3,0)],v[0]);cCount.textContent=(C+1)+'/21'}function playC(){speak(V[C][0])}function nextC(){C=(C+1)%V.length;renderC();setTimeout(playC,150)}
+let D=0;function renderD(){let v=V[D];dRu.textContent=v[2];setOpts(dOpts,[v[0],...v[3]],v[0]);dCount.textContent=(D+1)+'/21'}function nextD(){D=(D+1)%V.length;renderD()}
+function strip(py){return py.normalize('NFD').replace(/[\u0300-\u036f]/g,'')}function pyTwins(py){let plain=strip(py),a=plain.replace(/zh/g,'z').replace(/sh/g,'s').replace(/ch/g,'c'),b=plain.replace(/q/g,'ch').replace(/x/g,'sh').replace(/j/g,'zh'),c=plain+'r';return [...new Set([py,plain,a,b,c])].slice(0,4)}
+let E=0;function renderE(){let v=V[E];setOpts(eOpts,pyTwins(v[1]),v[1]);eCount.textContent=(E+1)+'/21'}function playE(){speak(V[E][0])}function nextE(){E=(E+1)%V.length;renderE();setTimeout(playE,150)}
+let F=0,chosen=[];
+function charDistractors(ch){
+ const pools={
+ "房":["放","方","防"],"子":["了","字","仔"],"公":["工","共","宫"],"寓":["遇","愚","偶"],
+ "摩":["磨","魔","摸"],"天":["夭","夫","无"],"大":["太","犬","天"],"楼":["搂","娄","喽"],
+ "别":["列","到","利"],"墅":["野","舒","署"],"凉":["京","谅","晾"],"亭":["停","庭","婷"],
+ "塔":["搭","答","塌"],"拱":["供","洪","哄"],"门":["问","间","闪"],"圆":["园","员","团"],
+ "形":["行","刑","型"],"厅":["听","斤","历"],"宫":["官","吕","营"],"殿":["店","电","臀"],
+ "柱":["住","注","驻"],"穹":["穷","弓","空"],"顶":["项","订","盯"],"梁":["粱","凉","染"],
+ "梯":["弟","低","涕"],"阳":["洋","阴","杨"],"台":["抬","合","古"],"地":["池","他","她"],
+ "下":["不","卞","卡"],"室":["市","屋","空"],"墙":["强","培","增"],"外":["处","夕","多"],
+ "内":["肉","丙","两"],"承":["成","丞","永"],"重":["种","童","量"],"隔":["融","格","阶"],
+ "玻":["波","破","披"],"璃":["离","漓","篱"],"幕":["暮","墓","慕"]
+ };
+ return shuffle(pools[ch]||shuffle(V.flatMap(x=>[...x[0]])).filter(x=>x!==ch)).slice(0,3)
+}
+function renderF(){
+ chosen=[];built.textContent='';let v=V[F];fRu.textContent=v[2];pieces.innerHTML='';
+ // Each required character gets its own row with 1 correct character + 3 visually similar distractors.
+ [...v[0]].forEach((correct,pos)=>{
+   let row=document.createElement('div');row.style.cssText='display:grid;grid-template-columns:repeat(4,minmax(55px,1fr));gap:8px;width:100%;margin:4px 0';
+   shuffle([correct,...charDistractors(correct)]).forEach(x=>{
+     let b=document.createElement('button');b.className='piece';b.textContent=x;
+     b.onclick=()=>{
+       if(row.dataset.done)return;
+       row.dataset.done='1';
+       [...row.children].forEach(z=>z.disabled=true);
+       if(x===correct){b.style.background='#dceee3';chosen[pos]=correct;add()}
+       else{
+         b.style.background='#f4d9d7';
+         [...row.children].forEach(z=>{if(z.textContent===correct)z.style.background='#dceee3'});
+         chosen[pos]=correct;
+       }
+       built.textContent=chosen.map(z=>z||'＿').join('');
+     };
+     row.appendChild(b)
+   });
+   pieces.appendChild(row)
+ });
+ built.textContent=[...v[0]].map(()=> '＿').join('');
+ fCount.textContent=(F+1)+'/21'
+}
+function resetBuild(){renderF()}function checkBuild(){if(built.textContent===V[F][0]){built.style.background='#dceee3'}else{built.style.background='#f4d9d7';setTimeout(()=>built.style.background='',600)}}function nextF(){F=(F+1)%V.length;built.style.background='';renderF()}
+let G=0;function renderG(){let v=V[G];gRu.textContent=v[2];setOpts(gChars,[v[0],...v[3]],v[0]);setOpts(gPy,pyTwins(v[1]),v[1]);gCount.textContent=(G+1)+'/21'}function playG(){speak(V[G][0])}function nextG(){G=(G+1)%V.length;renderG()}
+let H=0;function renderH(){let v=V[H];hRu.textContent=v[2];hCh.textContent=v[0];hPy.textContent=v[1];hMean.textContent=v[2];hAnswer.classList.add('hidden')}function playH(){speak(V[H][0])}function revealH(){hAnswer.classList.remove('hidden')}function nextH(){H=(H+1)%V.length;renderH()}
+renderA();renderB();renderC();renderD();renderE();renderF();renderG();renderH();
+</script></body></html>
