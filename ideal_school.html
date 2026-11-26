@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Моя идеальная школа · 我的理想学校</title>
+<style>
+#newDetails:empty{display:none}.lesson-detail,.story-line{margin:12px 0;padding:13px 15px;border:1px solid #dce3f5;border-radius:14px;background:#f5f7ff}.lesson-detail strong,.story-line [lang]{font-size:20px;font-family:KaiTi,"Kaiti SC",system-ui,sans-serif}.lesson-detail label{font-size:14px;margin-top:8px}.lesson-detail select{width:100%;font:inherit;padding:7px;border:1px solid #bac6e1;border-radius:8px;background:white;color:#1c2543}.story-line .reading{font-size:14px;color:#4e5588;line-height:1.5;margin:4px 0}.story-line details{margin:6px 0 0;font-size:13px}.story-line summary{width:fit-content}.story-line p{margin:4px 0 0}.story-line [lang],.reading{overflow-wrap:anywhere}.layout aside{max-height:calc(100vh - 30px);overflow:auto}@media(max-width:730px){.layout aside{max-height:none}}
+
+.phrases{display:grid;grid-template-columns:1fr 1fr;gap:8px}.favorite{margin-top:14px;padding:13px 15px 15px;background:#f2efff;border:1px solid #e3dbfb;border-radius:16px}.favorite label{margin-top:5px;font-size:14px}.favorite select{font:inherit;width:100%;padding:8px;border:1px solid #cbd4ea;border-radius:10px;color:#1c2543;background:white;margin-bottom:8px}.favorite button{margin-top:3px}.favorite input:not([hidden]){margin-bottom:8px}
+
+:root{color-scheme:light;--ink:#1c2543;--muted:#526079;--line:#dbe2f1;--blue:#343b9e;--paper:#fff}
+*{box-sizing:border-box}body{margin:0;background:#eef2fa;color:var(--ink);font:16px/1.55 system-ui,sans-serif}main{max-width:1120px;margin:auto;padding:26px 20px 50px}
+header{background:linear-gradient(123deg,#181f49,#313877 70%,#423182);color:white;padding:clamp(25px,5vw,58px);border-radius:26px;margin-bottom:22px}
+header p{color:#e5e5ff;max-width:570px;margin-bottom:0}h1,h2,p{margin-top:0}h1{font-size:clamp(32px,6vw,60px);line-height:1.05;margin:10px 0 18px;letter-spacing:-.045em}header span{font-size:24px;color:#d9dbff}
+.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:18px;align-items:start}section,aside{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:clamp(16px,3vw,26px);margin-bottom:16px}h2{font-size:22px;margin-bottom:5px}.hint{color:var(--muted);font-size:14px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}button,input,textarea{font:inherit}button{cursor:pointer;transition:background .16s,border-color .16s}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #6071d7;outline-offset:3px}
+.card{display:flex;flex-direction:column;align-items:flex-start;gap:2px;text-align:left;color:inherit;background:#f8faff;border:1px solid var(--line);border-radius:13px;padding:11px;overflow-wrap:anywhere}.card:hover{border-color:#8494df}.card[aria-pressed=true]{background:#e7e9ff;border-color:#575cc5;box-shadow:inset 0 0 0 1px #575cc5}.card [lang]{font-size:21px}.py,.meaning{font-size:13px;color:var(--muted)}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.small,.primary{border:1px solid #cbd4ea;border-radius:11px;background:#f6f7ff;color:var(--blue);padding:8px 12px}.small[aria-pressed=true],.primary{color:white;background:var(--blue);border-color:var(--blue)}.primary:hover{background:#242971}
+input,textarea{width:100%;border:1px solid #cbd4ea;border-radius:12px;padding:10px;background:#fcfdff;color:inherit}label{display:block;margin:14px 0 6px}textarea{min-height:160px;resize:vertical;font-size:20px;line-height:1.65;margin-bottom:10px}aside{position:sticky;top:15px}#outline{white-space:pre-wrap;background:#f3f5ff;padding:14px;border-radius:13px;font-size:19px;overflow-wrap:anywhere}details{margin-bottom:13px}summary{cursor:pointer;color:var(--blue)}#status{min-height:1.5em;margin:6px 0 0}
+@media(max-width:730px){.layout{grid-template-columns:1fr}aside{position:static}}@media(max-width:345px){.grid{grid-template-columns:1fr}}@media(prefers-reduced-motion:reduce){button{transition:none}}
+</style>
+</head>
+<body><main>
+<header><span lang="zh-Hans">我的理想学校</span><h1>Моя идеальная школа</h1><p>Какие уроки ты оставишь? Какие придумаешь? Выбери предметы и придумай, что отличает твою школу. Прочитай получившийся рассказ по-китайски.</p></header>
+<div class="toolbar">
+<button class="small" id="pinyin" type="button" aria-pressed="false">Пиньинь на карточках</button>
+<button class="small" id="meaning" type="button" aria-pressed="false">Перевод на карточках</button>
+</div>
+<div class="layout">
+<div>
+<section><h2>1. Что оставим?</h2><p class="hint">Отметь все предметы, которые хочешь оставить.</p><div class="grid" id="usual"></div></section>
+<section><h2>2. Что добавим?</h2><p class="hint">Добавь сколько захочешь. Можно ещё придумать свой урок.</p><div class="grid" id="special"></div>
+<div id="newDetails"></div><label for="own">Свой предмет по-китайски</label><input id="own" lang="zh-Hans" placeholder="茶艺课">
+<label for="ownPy">Как он читается?</label><input id="ownPy" placeholder="cháyì kè">
+<p class="hint">Впиши название и пиньинь, если хочешь добавить свой урок.</p></section>
+<section><h2>3. Что особенного в твоей школе?</h2><p class="hint">Выбери любые детали, о которых хочешь рассказать.</p><div class="grid" id="features"></div></section>
+</div>
+<aside><h2>Мой рассказ</h2>
+<p class="hint">Прочитай по строчкам. Под каждой фразой есть пиньинь, а перевод можно открыть отдельно.</p>
+<div id="story" aria-live="polite"></div>
+<div class="toolbar">
+<button class="primary" type="button" id="listen">Прослушать рассказ</button>
+<button class="small" type="button" id="stop">Остановить</button>
+<button class="small" type="button" id="copy">Скопировать рассказ</button>
+</div>
+<p class="hint" id="status" role="status"></p>
+</aside></div></main>
+<script>
+const subjects = {
+  usual: [
+    ['语文课','yǔwén kè','Родной язык и литература'],['数学课','shùxué kè','Математика'],
+    ['中文课','zhōngwén kè','Китайский'],['英语课','yīngyǔ kè','Английский'],
+    ['历史课','lìshǐ kè','История'],['地理课','dìlǐ kè','География'],
+    ['美术课','měishù kè','Рисование'],['音乐课','yīnyuè kè','Музыка'],
+    ['体育课','tǐyù kè','Физкультура'],['科学课','kēxué kè','Естествознание']
+  ],
+  special: [
+    ['漫画课','mànhuà kè','Рисуем комиксы'],['动画制作课','dònghuà zhìzuò kè','Создаём мультфильмы'],
+    ['室内设计课','shìnèi shèjì kè','Дизайн комнат'],['烹饪课','pēngrèn kè','Готовим еду'],
+    ['魔术课','móshù kè','Учимся фокусам'],['摄影课','shèyǐng kè','Учимся фотографировать'],
+    ['机器人课','jīqìrén kè','Собираем роботов'],['游戏设计课','yóuxì shèjì kè','Придумываем игры'],
+    ['天文课','tiānwén kè','Изучаем звёзды'],['宠物护理课','chǒngwù hùlǐ kè','Ухаживаем за питомцами']
+  ]
+};
+subjects.features = [
+  ['有一个大花园','yǒu yí ge dà huāyuán','Есть большой сад'],
+  ['有一个游泳池','yǒu yí ge yóuyǒngchí','Есть бассейн'],
+  ['有一个很大的图书馆','yǒu yí ge hěn dà de túshūguǎn','Есть большая библиотека'],
+  ['可以带宠物来学校','kěyǐ dài chǒngwù lái xuéxiào','Можно приходить с питомцами'],
+  ['可以在外面上课','kěyǐ zài wàimiàn shàngkè','Можно заниматься на улице'],
+  ['每天十点上课','měitiān shí diǎn shàngkè','Уроки каждый день начинаются в десять'],
+  ['星期五没有作业','xīngqīwǔ méiyǒu zuòyè','По пятницам нет домашнего задания']
+];
+const activities = [
+  ['画漫画','huà mànhuà','рисовать комиксы'],['做动画','zuò dònghuà','делать мультфильмы'],
+  ['设计房间','shèjì fángjiān','проектировать комнаты'],['做饭','zuòfàn','готовить'],
+  ['变魔术','biàn móshù','показывать фокусы'],['拍照','pāizhào','фотографировать'],
+  ['做机器人','zuò jīqìrén','делать роботов'],['设计游戏','shèjì yóuxì','придумывать игры'],
+  ['看星星','kàn xīngxing','смотреть на звёзды'],['照顾小动物','zhàogù xiǎo dòngwù','заботиться о животных']
+];
+const reasons = [
+  ['这门课很有意思','zhè mén kè hěn yǒuyìsi','этот урок интересный'],
+  ['我想学新东西','wǒ xiǎng xué xīn dōngxi','я хочу научиться новому'],
+  ['我可以和朋友一起学习','wǒ kěyǐ hé péngyou yìqǐ xuéxí','я могу учиться вместе с друзьями']
+];
+const groups = {usual:new Map(),special:new Map(),features:new Map()};
+const chosenReasons = new Map();
+const chosenActivities = new Map();
+const sharedActivities = [
+  ['做小组项目','zuò xiǎozǔ xiàngmù','делать проекты в группах'],
+  ['和朋友一起练习','hé péngyou yìqǐ liànxí','практиковаться вместе с друзьями']
+];
+const activityChoices = id => [activities[id], ...sharedActivities];
+const byId = id => document.getElementById(id);
+const own = byId('own'), ownPy = byId('ownPy'), story = byId('story'), status = byId('status');
+const options = byId('newDetails');
+let lines = [];
+
+function addLine(zh, py, ru) {
+  lines.push(zh);
+  const card = document.createElement('div');
+  card.className = 'story-line';
+  const sentence = document.createElement('div');
+  sentence.lang = 'zh-Hans';
+  sentence.textContent = zh;
+  const reading = document.createElement('div');
+  reading.className = 'reading';
+  reading.textContent = py;
+  const details = document.createElement('details');
+  const summary = document.createElement('summary');
+  summary.textContent = 'Что значит эта фраза?';
+  const translation = document.createElement('p');
+  translation.textContent = ru;
+  details.append(summary, translation);
+  const listen = document.createElement('button');
+  listen.className = 'small';
+  listen.type = 'button';
+  listen.textContent = 'Прослушать фразу';
+  listen.addEventListener('click', () => speak([zh]));
+  card.append(sentence, reading, details, listen);
+  story.append(card);
+}
+function renderStory() {
+  stopSpeech();
+  const open = [...story.querySelectorAll('details')].map(item => item.open);
+  story.replaceChildren();
+  lines = [];
+  addLine('大家好！这是我的理想学校。','Dàjiā hǎo! Zhè shì wǒ de lǐxiǎng xuéxiào.','Всем привет! Это моя идеальная школа.');
+  const kept = [...groups.usual.values()];
+  if (kept.length) {
+    addLine(
+      '在我的学校，我们有' + kept.map(([word]) => word).join('、') + '。',
+      'Zài wǒ de xuéxiào, wǒmen yǒu ' + kept.map(([, py]) => py).join(', ') + '.',
+      'В моей школе есть такие уроки — ' + kept.map(([, , ru]) => ru.toLowerCase()).join(', ') + '.'
+    );
+  }
+  for (const [id, entry] of groups.special) {
+    const [word, py, ru] = entry;
+    const reason = reasons[chosenReasons.get(id)];
+    addLine('我想加一门课：' + word + (reason ? '，因为' + reason[0] : '') + '。',
+      'Wǒ xiǎng jiā yì mén kè: ' + py + (reason ? ', yīnwèi ' + reason[1] : '') + '.',
+      'Я хочу добавить урок «' + ru + '»' + (reason ? ', потому что ' + reason[2] : '') + '.');
+    const [action, actionPy, actionRu] = activityChoices(id)[chosenActivities.get(id) ?? 0];
+    addLine('在这门课上，我们可以' + action + '。','Zài zhè mén kè shàng, wǒmen kěyǐ ' + actionPy + '.','На этом уроке можно ' + actionRu + '.');
+  }
+  if (own.value.trim() && ownPy.value.trim()) {
+    addLine('我还想加一门课：' + own.value.trim() + '。','Wǒ hái xiǎng jiā yì mén kè: ' + ownPy.value.trim() + '.','Ещё я хочу добавить свой урок.');
+  }
+  for (const [word, py, ru] of groups.features.values()) {
+    addLine('在我的学校，' + word + '。','Zài wǒ de xuéxiào, ' + py + '.','В моей школе ' + ru.charAt(0).toLowerCase() + ru.slice(1) + '.');
+  }
+  if (lines.length > 1) addLine('我喜欢我的理想学校！','Wǒ xǐhuan wǒ de lǐxiǎng xuéxiào!','Мне нравится моя идеальная школа!');
+  story.querySelectorAll('details').forEach((item, i) => {item.open = Boolean(open[i]);});
+  status.textContent = '';
+}
+function renderReasons() {
+  options.replaceChildren();
+  for (const [id, [word, py]] of groups.special) {
+    const block = document.createElement('div');
+    block.className = 'lesson-detail';
+    const title = document.createElement('strong');
+    title.lang = 'zh-Hans';
+    title.textContent = word + ' · ' + py;
+    const label = document.createElement('label');
+    label.htmlFor = 'reason-' + id;
+    label.textContent = 'Почему ты хочешь добавить этот урок?';
+    const select = document.createElement('select');
+    select.id = label.htmlFor;
+    select.add(new Option('Выбери причину', ''));
+    reasons.forEach(([zh, py, ru], i) => select.add(new Option(zh + ' · ' + py + ' — ' + ru, String(i))));
+    select.value = chosenReasons.get(id) ?? '';
+    select.addEventListener('change', () => {
+      chosenReasons.set(id, select.value);
+      renderStory();
+    });
+    const actionLabel = document.createElement('label');
+    actionLabel.htmlFor = 'activity-' + id;
+    actionLabel.textContent = 'Что можно делать на этом уроке?';
+    const actionSelect = document.createElement('select');
+    actionSelect.id = actionLabel.htmlFor;
+    activityChoices(id).forEach(([zh, py, ru], i) => actionSelect.add(new Option(zh + ' · ' + py + ' — ' + ru, String(i))));
+    actionSelect.value = chosenActivities.get(id) ?? '0';
+    actionSelect.addEventListener('change', () => {
+      chosenActivities.set(id, actionSelect.value);
+      renderStory();
+    });
+    block.append(title, actionLabel, actionSelect, label, select);
+    options.append(block);
+  }
+}
+for (const [group, entries] of Object.entries(subjects)) {
+  entries.forEach((entry, id) => {
+    const button = document.createElement('button');
+    button.className = 'card';
+    button.type = 'button';
+    button.setAttribute('aria-pressed', 'false');
+    ['word','py','meaning'].forEach((name, i) => {
+      const span = document.createElement('span');
+      span.className = name;
+      span.textContent = entry[i];
+      span.hidden = i !== 0;
+      if (i === 0) span.lang = 'zh-Hans';
+      button.append(span);
+    });
+    button.addEventListener('click', () => {
+      const choices = groups[group];
+      if (choices.has(id)) choices.delete(id);
+      else choices.set(id, entry);
+      button.setAttribute('aria-pressed', String(choices.has(id)));
+      if (group === 'special') renderReasons();
+      renderStory();
+    });
+    byId(group).append(button);
+  });
+}
+for (const [id, selector] of [['pinyin','.py'],['meaning','.meaning']]) {
+  const button = byId(id);
+  button.addEventListener('click', () => {
+    const show = button.getAttribute('aria-pressed') === 'false';
+    button.setAttribute('aria-pressed',String(show));
+    document.querySelectorAll(selector).forEach(span => {span.hidden = !show;});
+  });
+}
+own.addEventListener('input', renderStory);
+ownPy.addEventListener('input', renderStory);
+const speech = window.speechSynthesis;
+let playbackId = 0;
+function stopSpeech() {
+  playbackId++;
+  speech?.cancel();
+}
+function speak(sentences) {
+  stopSpeech();
+  if (!speech || typeof SpeechSynthesisUtterance !== 'function') {
+    status.textContent = 'Этот браузер не поддерживает озвучку. Для чтения используй пиньинь.';
+    return;
+  }
+  const voices = speech.getVoices();
+  const voice = voices.find(item => /^zh[-_]?(CN|Hans)/i.test(item.lang))
+    ?? voices.find(item => /^zh$|^zh[-_]TW$/i.test(item.lang));
+  if (voices.length && !voice) {
+    status.textContent = 'Для озвучки нужен китайский голос. Пока можно читать по пиньиню.';
+    return;
+  }
+  const current = playbackId;
+  function read(index) {
+    if (current !== playbackId) return;
+    if (index === sentences.length) {
+      status.textContent = '';
+      return;
+    }
+    const utterance = new SpeechSynthesisUtterance(sentences[index]);
+    utterance.lang = 'zh-CN';
+    if (voice) utterance.voice = voice;
+    utterance.rate = 0.83;
+    utterance.onend = () => read(index + 1);
+    utterance.onerror = () => {
+      if (current === playbackId) status.textContent = 'Не удалось включить китайскую озвучку. Для чтения используй пиньинь.';
+    };
+    speech.speak(utterance);
+  }
+  status.textContent = 'Идёт озвучка…';
+  read(0);
+}
+byId('listen').addEventListener('click', () => speak([...lines]));
+byId('stop').addEventListener('click', () => {
+  stopSpeech();
+  status.textContent = '';
+});
+byId('copy').addEventListener('click', async () => {
+  const text = lines.join('\n');
+  try {
+    await navigator.clipboard.writeText(text);
+    status.textContent = 'Рассказ скопирован.';
+  } catch {
+    const field = document.createElement('textarea');
+    field.value = text;
+    field.readOnly = true;
+    field.lang = 'zh-Hans';
+    field.setAttribute('aria-label','Итоговый рассказ для копирования');
+    byId('copy').parentElement.after(field);
+    field.addEventListener('blur', () => field.remove(), {once:true});
+    field.focus();
+    field.select();
+    status.textContent = 'Текст выделен. Теперь его можно скопировать вручную.';
+  }
+});
+renderStory();
+</script>
+</body></html>
